@@ -41,7 +41,7 @@ public class Reactor {
         device.addConnection(connectedDevice);
       }
 
-      if (device.getId().equals("you")) {
+      if (device.getId().equals("svr")) {
         startingDevice = device;
       }
     }
@@ -52,16 +52,49 @@ public class Reactor {
     return count;
   }
 
+  public long solve2() {
+    return dfs2(startingDevice, false, false, new HashSet<>());
+  }
+
+  private long dfs2(Device current, boolean visitedDAC, boolean visitedFFT, Set<String> localPath) {
+    String currentId = current.getId();
+
+    if (currentId.equals("dac")) {
+      visitedDAC = true;
+    } else if (currentId.equals("fft")) {
+      visitedFFT = true;
+    }
+
+    if (currentId.equals(GOAL_STRING)) {
+      return (visitedDAC && visitedFFT) ? 1 : 0;
+    }
+
+    if (localPath.contains(currentId)) {
+      return 0;
+    }
+
+    localPath.add(currentId);
+    long currentDeviceCount = 0;
+
+    for (Device conn : current.getConnections()) {
+      currentDeviceCount += dfs2(conn, visitedDAC, visitedFFT, localPath);
+    }
+
+    localPath.remove(currentId);
+
+    return currentDeviceCount;
+  }
+
   private void dfs(Device current) {
     String currentId = current.getId();
 
-    if(currentId.equals(GOAL_STRING)){
+    if (currentId.equals(GOAL_STRING)) {
       count++;
       return;
     }
 
     for (Device conn : current.getConnections()) {
-        dfs(conn);
+      dfs(conn);
     }
   }
 }

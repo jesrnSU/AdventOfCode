@@ -5,13 +5,29 @@ import java.util.List;
 import java.util.Objects;
 
 public class Device {
-
+    private boolean visited = false;
+    private int correctPaths = 0;
     private String id;
     private List<Device> connections;
 
     public Device(String id){
         this.id = id;
         connections = new ArrayList<>();
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
+    }
+
+    public int getCorrectPaths() {
+        if(visited){
+            return correctPaths;
+        }
+        return 0;
+    }
+
+    public void setCorrectPaths(int correctPaths) {
+        this.correctPaths = correctPaths;
     }
 
     public void addConnection(Device device){

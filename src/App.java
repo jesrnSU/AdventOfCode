@@ -8,6 +8,6 @@ import day9.MovieTheater1;
 public class App {
   public static void main(String[] args) throws Exception {
     Reactor reactor = new Reactor("src/day11/data.txt");
-    System.out.println(reactor.solve());
+    System.out.println(reactor.solve2());
   }
 }
