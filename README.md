@@ -1,7 +1,7 @@
 # Advent of Code
 
-- `adventofcode2024/` contains the C solutions.
-- `adventofcode2025/` contains the Java solutions (11/12 completed).
+- `adventofcode2024/` contains C solutions.
+- `adventofcode2025/` contains Java solutions (11/12 completed).
 
 ## 2024 in C
 
