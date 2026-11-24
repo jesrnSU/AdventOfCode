@@ -60,7 +60,50 @@ static int solvePuzzle(int *left, int *right, int size){
   return result;
 }
 
+static void readPuzzleDataValuesPartTwo(const char *path, int *left, int *right, int size){
+  FILE *fp = fopen(path, "r");
+  int leftVal;
+  int rightVal;
 
+  for(int i = 0; i < size; i++){
+    fscanf(fp, "%d %d", &leftVal, &rightVal);
+    left[i] = leftVal;
+    right[i] = rightVal;
+  }
+  fclose(fp);
+}
+
+static int solvePuzzlePartTwo(int *left, int *right, int size){
+  qsort(left, size, sizeof *left, compareInts);
+  qsort(right, size, sizeof *right, compareInts);
+
+  int result = 0;
+  int i = 0;
+  int j = 0;
+
+  while (i < size && j < size) {
+    int value = left[i];
+
+    while (j < size && right[j] < value) {
+      j++;
+    }
+
+    int rightStart = j;
+    while (j < size && right[j] == value) {
+      j++;
+    }
+
+    int leftStart = i;
+    while (i < size && left[i] == value) {
+      i++;
+    }
+
+    int leftCount = i - leftStart;
+    int rightCount = j - rightStart;
+    result += value * leftCount * rightCount;
+  }
+  return result;
+}
 
 int main(void)
 {
@@ -72,10 +115,15 @@ int main(void)
   int left[count];
   int right[count];
   int result;
+  int resultPartTwo;
 
   readPuzzleDataValues("data.txt", left, right, count);
   result = solvePuzzle(left, right, count);
 
+  readPuzzleDataValuesPartTwo("data.txt", left, right, count);
+  resultPartTwo = solvePuzzlePartTwo(left, right, count);
+
   printf("%d\n", result);
+  printf("%d\n", resultPartTwo);
   return EXIT_SUCCESS;
 }
