@@ -105,6 +105,25 @@ static int wordSearch(long rows, long cols, char grid[rows][cols], struct Pos xP
   return foundWords;
 }
 
+static bool wordSearchPart2(long rows, long cols, char grid[rows][cols], struct Pos aPos){
+  long x = aPos.x;
+  long y = aPos.y;
+  if(x == 0 || x == cols - 1 || y == 0 || y == rows - 1){
+    return false;
+  }
+
+  char topLeft = grid[y - 1][x - 1];
+  char topRight = grid[y - 1][x + 1];
+  char bottomLeft = grid[y + 1][x - 1];
+  char bottomRight = grid[y + 1][x + 1];
+
+  bool firstDiagonal = (topLeft == 'M' && bottomRight == 'S') ||
+                       (topLeft == 'S' && bottomRight == 'M');
+  bool secondDiagonal = (topRight == 'M' && bottomLeft == 'S') ||
+                        (topRight == 'S' && bottomLeft == 'M');
+  return firstDiagonal && secondDiagonal;
+}
+
 static int solvePart1(long rows, long cols, char grid[rows][cols]){
   int result = 0;
 
@@ -113,6 +132,19 @@ static int solvePart1(long rows, long cols, char grid[rows][cols]){
       if(grid[i][j] == 'X'){
         struct Pos xPos = {j, i};
         result += wordSearch(rows, cols, grid, xPos);
+      }
+    }
+  }
+  return result;
+}
+
+static int solvePart2(long rows, long cols, char grid[rows][cols]){
+  int result = 0;
+
+  for(long i = 0; i < rows; i++){
+    for(long j = 0; j < cols; j++){
+      if(grid[i][j] == 'A' && wordSearchPart2(rows, cols, grid, (struct Pos){j, i})){
+        result++;
       }
     }
   }
@@ -136,5 +168,6 @@ int main(void){
 
   printGrid(rows, cols, grid);
   printf("Part 1: %d\n", solvePart1(rows, cols, grid));
+  printf("Part 2: %d\n", solvePart2(rows, cols, grid));
 }
 
