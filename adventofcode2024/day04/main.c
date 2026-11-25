@@ -74,42 +74,34 @@ static int wordSearch(long rows, long cols, char grid[rows][cols], struct Pos xP
   if(y >= 3){
     foundWords += checkWord(cols, grid, xPos, (struct Pos){x, y - 1}, (struct Pos){x, y - 2}, (struct Pos){x, y - 3});
   }
-
   // Up-right
   if(x + 3 < cols && y >= 3){
     foundWords += checkWord(cols, grid, xPos, (struct Pos){x + 1, y - 1}, (struct Pos){x + 2, y - 2}, (struct Pos){x + 3, y - 3});
   }
-
   // Right
   if(x + 3 < cols){
     foundWords += checkWord(cols, grid, xPos, (struct Pos){x + 1, y}, (struct Pos){x + 2, y}, (struct Pos){x + 3, y});
   }
-
   // Down-right
   if(x + 3 < cols && y + 3 < rows){
     foundWords += checkWord(cols, grid, xPos, (struct Pos){x + 1, y + 1}, (struct Pos){x + 2, y + 2}, (struct Pos){x + 3, y + 3});
   }
-
   // Down
   if(y + 3 < rows){
     foundWords += checkWord(cols, grid, xPos, (struct Pos){x, y + 1}, (struct Pos){x, y + 2}, (struct Pos){x, y + 3});
   }
-
   // Down-left
   if(x >= 3 && y + 3 < rows){
     foundWords += checkWord(cols, grid, xPos, (struct Pos){x - 1, y + 1}, (struct Pos){x - 2, y + 2}, (struct Pos){x - 3, y + 3});
   }
-
   // Left
   if(x >= 3){
     foundWords += checkWord(cols, grid, xPos, (struct Pos){x - 1, y}, (struct Pos){x - 2, y}, (struct Pos){x - 3, y});
   }
-
   // Up-left
   if(x >= 3 && y >= 3){
     foundWords += checkWord(cols, grid, xPos, (struct Pos){x - 1, y - 1}, (struct Pos){x - 2, y - 2}, (struct Pos){x - 3, y - 3});
   }
-
   return foundWords;
 }
 
